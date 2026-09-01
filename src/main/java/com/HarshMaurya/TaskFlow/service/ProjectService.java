@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.HarshMaurya.TaskFlow.entity.Project;
+import com.HarshMaurya.TaskFlow.exception.ResourceNotFoundException;
 import com.HarshMaurya.TaskFlow.repository.ProjectRepository;
 
 @Service
@@ -22,7 +23,7 @@ public class ProjectService {
 
     public Project getProjectById(Long id) {
         return projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + id));
     }
 
     public List<Project> getAllProjects() {
@@ -39,7 +40,7 @@ public class ProjectService {
 
     public void deleteProject(Long id) {
         if (!projectRepository.existsById(id)) {
-            throw new RuntimeException("Project not found with id: " + id);
+            throw new ResourceNotFoundException("Project not found with id: " + id);
         }
         projectRepository.deleteById(id);
     }

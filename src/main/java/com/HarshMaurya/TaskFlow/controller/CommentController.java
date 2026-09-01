@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.HarshMaurya.TaskFlow.entity.Comment;
 import com.HarshMaurya.TaskFlow.service.CommentService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
@@ -18,7 +20,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public Comment createComment(@RequestBody Comment comment) {
+    public Comment createComment(@Valid @RequestBody Comment comment) {
         return commentService.createComment(comment);
     }
 

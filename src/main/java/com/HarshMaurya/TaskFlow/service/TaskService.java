@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.HarshMaurya.TaskFlow.entity.Task;
 import com.HarshMaurya.TaskFlow.entity.TaskStatus;
+import com.HarshMaurya.TaskFlow.exception.ResourceNotFoundException;
 import com.HarshMaurya.TaskFlow.repository.TaskRepository;
 
 @Service
@@ -53,7 +54,7 @@ public class TaskService {
 
     public void deleteTask(Long id) {
         if (!taskRepository.existsById(id)) {
-            throw new RuntimeException("Task not found with id: " + id);
+            throw new ResourceNotFoundException("Task not found with id: " + id);
         }
         taskRepository.deleteById(id);
     }

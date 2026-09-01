@@ -8,6 +8,8 @@ import com.HarshMaurya.TaskFlow.entity.Task;
 import com.HarshMaurya.TaskFlow.entity.TaskStatus;
 import com.HarshMaurya.TaskFlow.service.TaskService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
@@ -19,7 +21,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
+    public Task createTask(@Valid @RequestBody Task task) {
         return taskService.createTask(task);
     }
 
@@ -46,7 +48,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public Task updateTask(@PathVariable Long id,@Valid @RequestBody Task task) {
         return taskService.updateTask(id, task);
     }
 

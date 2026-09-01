@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.HarshMaurya.TaskFlow.entity.Comment;
+import com.HarshMaurya.TaskFlow.exception.ResourceNotFoundException;
 import com.HarshMaurya.TaskFlow.repository.CommentRepository;
 
 @Service
@@ -22,7 +23,7 @@ public class CommentService {
 
     public Comment getCommentById(Long id) {
         return commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id: " + id));
     }
 
     public List<Comment> getCommentsByTaskId(Long taskId) {
@@ -31,7 +32,7 @@ public class CommentService {
 
     public void deleteComment(Long id) {
         if (!commentRepository.existsById(id)) {
-            throw new RuntimeException("Comment not found with id: " + id);
+            throw new ResourceNotFoundException("Comment not found with id: " + id);
         }
         commentRepository.deleteById(id);
     }

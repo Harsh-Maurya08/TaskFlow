@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.HarshMaurya.TaskFlow.entity.User;
 import com.HarshMaurya.TaskFlow.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -18,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public User createUser(@Valid @RequestBody User user) {
         return userService.createUser(user);
     }
 
@@ -33,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+    public User updateUser(@PathVariable Long id,@Valid @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 

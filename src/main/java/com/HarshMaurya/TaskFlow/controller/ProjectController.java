@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.HarshMaurya.TaskFlow.entity.Project;
 import com.HarshMaurya.TaskFlow.service.ProjectService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
@@ -18,7 +20,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project project) {
+    public Project createProject(@Valid @RequestBody Project project) {
         return projectService.createProject(project);
     }
 
@@ -33,7 +35,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
+    public Project updateProject(@PathVariable Long id,@Valid @RequestBody Project project) {
         return projectService.updateProject(id, project);
     }
 

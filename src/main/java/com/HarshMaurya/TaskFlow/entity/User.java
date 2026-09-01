@@ -1,12 +1,19 @@
 package com.HarshMaurya.TaskFlow.entity;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +36,6 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    // Constructors
     public User() {
     }
 
@@ -40,7 +46,41 @@ public class User {
         this.role = role;
     }
 
-    // Getters and Setters
+    // ---------- UserDetails methods (required by Spring Security) ----------
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Spring Security expects roles prefixed with "ROLE_"
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email; // we log in with email, not a separate username field
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    // ---------- Your existing getters/setters ----------
+
     public Long getId() {
         return id;
     }
@@ -59,8 +99,8 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
+    } 
+    
     public void setEmail(String email) {
         this.email = email;
     }
