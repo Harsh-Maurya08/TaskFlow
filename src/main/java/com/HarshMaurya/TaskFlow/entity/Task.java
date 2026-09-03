@@ -1,7 +1,7 @@
 package com.HarshMaurya.TaskFlow.entity;
 
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -52,6 +52,9 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "assignee_id" , nullable = false)
     private User assignee;
+
+    @Column
+private LocalDateTime completedAt; 
 
 
     //Constructors
@@ -150,6 +153,14 @@ public class Task {
 
     public void setAssignee(User assignee) {
         this.assignee = assignee;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
     }
 
 }

@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.HarshMaurya.TaskFlow.entity.Task;
 import com.HarshMaurya.TaskFlow.entity.TaskStatus;
+import com.HarshMaurya.TaskFlow.entity.User;
 import com.HarshMaurya.TaskFlow.service.TaskService;
+import com.HarshMaurya.TaskFlow.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -15,9 +17,11 @@ import jakarta.validation.Valid;
 public class TaskController {
 
     private final TaskService taskService;
+    private final UserService userService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
 
     @PostMapping
@@ -56,4 +60,10 @@ public class TaskController {
     public void deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
     }
+
+    @GetMapping("/completed/user/{userId}")
+public List<Task> getCompletedTasksByUser(@PathVariable Long userId) {
+    User user = userService.getUserById(userId); // you'll need to inject UserService into TaskController for this
+    return taskService.getCompletedTasksByUser(user);
+}
 }
